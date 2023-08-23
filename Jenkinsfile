@@ -13,5 +13,16 @@ environment {
             sh 'mvn clean deploy'
         }
       }
+    
+    stage('SonarQube analysis') {
+    environment {
+     scannerHome = tool 'valaxy-sonar-scanner'
     }
+    steps{
+    withSonarQubeEnv('valaxy-sonarqube-server') { // If you have configured more
+      sh "${scannerHome}/bin/sonar-scanner"
+    }
+    }
+  }
+}
 }
